@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcsod6naervw3"]
+[gd_scene load_steps=7 format=3 uid="uid://dcsod6naervw3"]
 
+[ext_resource type="Script" path="res://Scripts/Bullet.gd" id="1_ci65i"]
 [ext_resource type="Texture2D" uid="uid://dfatirr1djluj" path="res://Assets/Sprites/DaggerTexture.tres" id="1_vf40g"]
 
 [sub_resource type="Animation" id="Animation_04p0v"]
@@ -44,6 +45,7 @@ _data = {
 size = Vector2(10, 10)
 
 [node name="Bullet" type="Node2D"]
+script = ExtResource("1_ci65i")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_vf40g")
@@ -62,3 +64,5 @@ shape = SubResource("RectangleShape2D_vcf8o")
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 position = Vector2(2.38419e-07, -2.38419e-07)
 scale = Vector2(0.5, 0.5)
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

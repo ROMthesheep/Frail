@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmm7kyyi18l6h"]
+
+[ext_resource type="Texture2D" uid="uid://34tfib26kq2d" path="res://Assets/Sprites/Enemy.tres" id="1_mu7s0"]
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_xcdmt"]
+
+[sub_resource type="Animation" id="Animation_kd7e8"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(3.346, 2.75), Vector2(3.5, 2.75), Vector2(3.346, 2.75), Vector2(3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.261799, 0.261799, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_1pubd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w5dvt"]
+_data = {
+"Idle": SubResource("Animation_kd7e8"),
+"RESET": SubResource("Animation_1pubd")
+}
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_xcdmt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mu7s0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+autoplay = "Idle"
+libraries = {
+"": SubResource("AnimationLibrary_w5dvt")
+}
+
+[node name="BulletGenerator" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

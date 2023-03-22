@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://cwktowevjdglr"]
+
+[ext_resource type="Texture2D" uid="uid://vh3lab06ssk2" path="res://Assets/Sprites/heart.tres" id="1_d5tum"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_d8mpq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uotao"]
+radius = 6.08276
+
+[sub_resource type="Animation" id="Animation_ukomk"]
+resource_name = "dokidoki"
+length = 1.5
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.79, 0.84, 0.89, 0.95, 1.24, 1.29, 1.34, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.25, 1.5), Vector2(1.5, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1.25, 1.5), Vector2(1.5, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sh8v8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_id3be"]
+_data = {
+"RESET": SubResource("Animation_sh8v8"),
+"dokidoki": SubResource("Animation_ukomk")
+}
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_d8mpq")
+
+[node name="AreaPlayer" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaPlayer"]
+shape = SubResource("CircleShape2D_uotao")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_d5tum")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+autoplay = "dokidoki"
+libraries = {
+"": SubResource("AnimationLibrary_id3be")
+}
+
+[connection signal="area_entered" from="AreaPlayer" to="." method="_on_area_player_area_entered"]

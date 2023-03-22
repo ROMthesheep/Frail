@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8ndeoys4b468"]
+
+[ext_resource type="PackedScene" uid="uid://cwktowevjdglr" path="res://Entities/Player.tscn" id="1_mpqc8"]
+[ext_resource type="PackedScene" uid="uid://dmm7kyyi18l6h" path="res://Entities/Enemy.tscn" id="2_hknmw"]
+[ext_resource type="PackedScene" uid="uid://b3pnjrxb7gg71" path="res://Utils/DialogBox/DialogBox.tscn" id="4_77nb3"]
+
+[node name="testArea" type="Node2D"]
+
+[node name="DialogBox" parent="." instance=ExtResource("4_77nb3")]
+offset_left = 746.0
+offset_top = 535.0
+offset_right = 1116.0
+offset_bottom = 620.0
+
+[node name="Player" parent="." instance=ExtResource("1_mpqc8")]
+position = Vector2(164, 100)
+
+[node name="Enemy" parent="." instance=ExtResource("2_hknmw")]
+position = Vector2(280, 41)
