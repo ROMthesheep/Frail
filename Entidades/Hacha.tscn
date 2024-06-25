@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://cq1hho0jepiv2"]
+
+[ext_resource type="Script" path="res://Scripts/Daga.gd" id="1_b302v"]
+[ext_resource type="Texture2D" uid="uid://k8imd3lwvp3l" path="res://Assets/Sprites/Hacha.tres" id="2_2lmnk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c2cdy"]
+size = Vector2(10, 10)
+
+[sub_resource type="Animation" id="Animation_41ap7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8qbed"]
+resource_name = "Spin"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pjnl3"]
+_data = {
+"RESET": SubResource("Animation_41ap7"),
+"Spin": SubResource("Animation_8qbed")
+}
+
+[node name="Hacha" type="Area2D"]
+script = ExtResource("1_b302v")
+speed = 500
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_c2cdy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2lmnk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_pjnl3")
+}
+autoplay = "Spin"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(-1.19209e-07, -1.19209e-07)
+scale = Vector2(0.7, 0.7)
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

@@ -1,0 +1,107 @@
+[gd_scene load_steps=9 format=3 uid="uid://db0vv15gkthxy"]
+
+[ext_resource type="Script" path="res://Misc/Sistema de dialogos/DialogBox.gd" id="1_q1pjd"]
+[ext_resource type="Texture2D" uid="uid://cwuek5v1p7mcs" path="res://Assets/Sprites/DialogBox.tres" id="2_bcd8l"]
+[ext_resource type="FontFile" uid="uid://7homvth6mk0v" path="res://Assets/Fuentes/monogram.ttf" id="3_bnio5"]
+[ext_resource type="AudioStream" uid="uid://bm41f1q3e35lj" path="res://Assets/Sonido/SFX/SpeakSound.wav" id="4_qdy51"]
+[ext_resource type="Texture2D" uid="uid://d2h50bsujx04w" path="res://Assets/Sprites/ContinueArrow.tres" id="4_xuuwa"]
+
+[sub_resource type="Animation" id="Animation_4kdlt"]
+resource_name = "Parpadeo"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1kpse"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vuq4l"]
+_data = {
+"Parpadeo": SubResource("Animation_4kdlt"),
+"RESET": SubResource("Animation_1kpse")
+}
+
+[node name="DialogBox" type="MarginContainer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -576.0
+offset_right = -551.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("1_q1pjd")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_bcd8l")
+region_rect = Rect2(0, 0, 16, 16)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Label" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.847059, 0.819608, 0.741176, 1)
+theme_override_fonts/font = ExtResource("3_bnio5")
+theme_override_font_sizes/font_size = 30
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qdy51")
+volume_db = -20.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+texture = ExtResource("4_xuuwa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer2/TextureRect"]
+libraries = {
+"": SubResource("AnimationLibrary_vuq4l")
+}
+autoplay = "Parpadeo"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

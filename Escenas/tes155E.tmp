@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8su3nm7u6e1v"]
+
+[ext_resource type="Script" path="res://Escenas/test.gd" id="1_8y128"]
+[ext_resource type="PackedScene" uid="uid://cgy5oimumekru" path="res://Entidades/Player.tscn" id="1_fqmi3"]
+[ext_resource type="PackedScene" uid="uid://cn7bdryhjel4w" path="res://Entidades/NPC.tscn" id="2_vxsaq"]
+[ext_resource type="PackedScene" uid="uid://te7kly35t0s6" path="res://Entidades/Daga.tscn" id="3_cor0l"]
+[ext_resource type="AudioStream" uid="uid://dhvsu1avklw2i" path="res://Assets/Sonido/Musica/42b4b (mp3cut.net).wav" id="4_r3wjk"]
+[ext_resource type="PackedScene" uid="uid://btw5fqrfyl5dr" path="res://Entidades/Love.tscn" id="5_i7yqt"]
+
+[node name="Test" type="Node2D"]
+script = ExtResource("1_8y128")
+
+[node name="Player" parent="." instance=ExtResource("1_fqmi3")]
+position = Vector2(436, 347)
+
+[node name="Npc" parent="." instance=ExtResource("2_vxsaq")]
+position = Vector2(527, 171)
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_r3wjk")
+volume_db = 8.0
+autoplay = true
+
+[node name="Love" parent="." instance=ExtResource("5_i7yqt")]
+position = Vector2(709, 269)
+
+[node name="aaaa" parent="." instance=ExtResource("3_cor0l")]
+position = Vector2(349, 261)
