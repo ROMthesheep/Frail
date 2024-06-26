@@ -12,7 +12,7 @@ const CORAZON_3_HP = preload("res://Assets/Sprites/Corazon_3_hp.tres")
 const DEAD_PLAYER = preload("res://Assets/Sprites/DeadPlayer.tres")
 
 @onready var sprite = $Sprite2D
-@onready var label = $Label
+@onready var label = $"Dev suff/Label"
 @onready var heartbeat = $Heartbeat
 @onready var animation_tree = $Sprite2D/AnimationTree
 @onready var hurtSound = $Hurt
@@ -43,17 +43,18 @@ func update_health():
 			sprite.texture = CORAZON_1_HP
 
 func _on_area_player_area_entered(area):
-	if area is Proyectil:
-		hurt()
-	elif area is Love:
-		heal()
-	else:
-		pass
+	match area:
+		var item when item is Proyectil:
+			hurt()
+		var item when item is Love:
+			heal()
+		_:
+			pass
 
 func checkMouseSpeed():
 	var lastMouseSpeed = Input.get_last_mouse_velocity()
-	var speed = sqrt(lastMouseSpeed.x * lastMouseSpeed.x + 2 * lastMouseSpeed.y)
-	label.text = str(int(speed))
+	var speed = sqrt(lastMouseSpeed.x * lastMouseSpeed.x + lastMouseSpeed.y * lastMouseSpeed.y)
+	label.text = "Speed: %d" % (int(speed))
 	if speed > 500 and not _is_dead and _can_be_hurted:
 		hurt()
 		

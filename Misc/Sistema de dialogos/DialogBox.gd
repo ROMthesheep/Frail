@@ -37,7 +37,7 @@ func displayLetter():
 		continueArrowContainer.show()
 		finished.emit()
 		return
-	match  text[letterIndex]:
+	match text[letterIndex]:
 		"!", ".", ",", "?", "¡", "¿":
 			timer.start(punctuationTime)
 		" ":

@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var label = $Label
+@onready var label: Label = $Label
 @onready var player = $Player
 @onready var npc = $Npc
 const DIALOG_BOX = preload("res://Misc/Sistema de dialogos/DialogBox.tscn")
